@@ -1,2 +1,3 @@
 # KanazawaR001
-Kanazawa.R #1 での初心者チュートリアルの発表資料
+
+Kanazawa.R #1 での発表資料です。

@@ -1,0 +1,16 @@
+---
+title: "Rをつかってみよう"
+author: "伊東宏樹"
+format: revealjs
+editor: visual
+---
+
+## はじめに
+
+Kanazawa.R #1
+
+## 自己紹介
+
+-   氏名: 伊東宏樹
+
+## そもそも“R”とは
