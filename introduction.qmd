@@ -1,13 +1,30 @@
 ---
 title: "Rをつかってみよう"
+subtitle: "Kanazawa.R #1"
+date: 2024-06-29
 author: "伊東宏樹"
-format: revealjs
+lang: ja
+format:
+  revealjs:
+    theme: [dark, custom.scss]
+slide-number: true
 editor: visual
+embed-resources: true
 ---
 
 ## はじめに
 
-Kanazawa.R #1
+::: {style="margin-top: 2em; text-align: center; font-size: 200%; font-weight: bold;"}
+Kanazawa.R にご参加<br /> ありがとうございます。
+:::
+
+## 本日の内容
+
+-   Rの紹介
+
+-   実演
+
+-   まとめ
 
 ## 自己紹介
 
@@ -29,23 +46,27 @@ Kanazawa.R #1
 
 -   統計解析
 
--   データの操作・整形
+-   データの整形
 
 -   可視化
 
-## Rを使ってみよう
+## パッケージ
 
-実演
+-   機能を拡張する関数やデータなどをまとめたもの
 
-## RStudio
+-   ユーザーが自分でパッケージを作れる。
 
-統合開発環境 (IDE)
+-   CRAN (Comprehensive R Archive Network)
+
+-   審査をとおるとCRANに登録される。
+
+-   CRANには20828個のパッケージが登録されている（2024年6月2日現在）。
 
 ## Rコミュニティ
 
-Tokyo.R
+-   Tokyo.R, SappoRo.R, fukuoka.R など、各地で勉強会が開催されている。
 
-Japan.R
+-   Japan.R
 
 ## R vs. Python
 
@@ -65,11 +86,9 @@ CRANからインストーラーをダウンロード
 
 UNIX系ではソースからコンパイルしてもよい
 
-## パッケージ
+## RStudio
 
-機能を拡張する関数やデータなどをまとめたもの
-
-20828個のパッケージ（2024年6月2日現在）
+統合開発環境 (IDE)
 
 ## 実演
 
@@ -77,14 +96,14 @@ RStudioに移動します。
 
 ## 参考文献
 
-### Rで楽しむ統計
+### [Rで楽しむ統計](https://www.kyoritsu-pub.co.jp/book/b10003780.html)
 
 奥村晴彦著, 共立出版
 
-### Rで学ぶ統計的データ解析
+### [Rで学ぶ統計的データ解析](https://www.kspub.co.jp/book/detail/5186190.html)
 
 林賢一・下平英寿著, 講談社
 
-### ［改訂第2飯］RユーザーのためのRStudio［実践］入門
+### [［改訂第2飯］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
 
 松村優哉・湯谷啓明・紀ノ定保礼・前田和寛著, 技術評論社
