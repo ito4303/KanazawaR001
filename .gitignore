@@ -50,4 +50,4 @@ rsconnect/
 
 # Quarto output files
 *.html
-
+plot.png

@@ -1,0 +1,191 @@
+---
+title: "ggplot2によるデータ可視化"
+subtitle: "Kanazawa.R #1"
+date: 2024-06-29
+author: "伊東宏樹"
+lang: ja
+format:
+  revealjs:
+    theme: [dark, custom.scss]
+    fig-width: 5
+    fig-height: 3
+execute:
+  echo: true
+slide-number: true
+editor: visual
+embed-resources: true
+---
+
+## 内容
+
+-   ggplot2パッケージの紹介
+
+-   ggplot2でグラフを描いてみる
+
+## ggplot2パッケージ
+
+## インストール
+
+```{r}
+#| eval: false
+
+install.packages("ggplot2")
+```
+
+## 使い方
+
+ライブラリよびだし
+
+```{r}
+library(ggplot2)
+```
+
+## データ
+
+アヤメの花のデータ
+
+```{r}
+#| label: data
+
+data(iris)
+iris
+```
+
+## ggplot関数
+
+`ggplot`関数だけで、空のグラフ
+
+データフレームを引数として与える
+
+```{r}
+#| label: ggplot
+
+ggplot(data = iris)
+```
+
+## データのマッピング
+
+`mapping`引数に`aes`関数を与える (aes = aesthetic mappings)
+
+```{r}
+#| label: mapping
+
+ggplot(data = iris, mapping = aes(x = Sepal.Width, y = Sepal.Length))
+```
+
+## geom_pointで散布図グラフ
+
+"+"演算子で要素を加えていく
+
+geom\_\* = geometric object
+
+```{r}
+#| label: geom
+
+ggplot(data = iris, mapping = aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point()
+```
+
+## こうしても同じ
+
+`geom_*`関数の引数でmappingを指定してもよい（実はdataも）
+
+```{r}
+#| label: geom2
+
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Sepal.Width, y = Sepal.Length))
+```
+
+## 種ごとに色分け
+
+`aes`関数の`colour`引数(`color`でも可)に`Species`を指定する
+
+```{r}
+#| label: colour
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species))
+```
+
+## 形を変える
+
+`shape`引数に`Species`を指定する
+
+```{r}
+#| label: shape
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species))
+```
+
+## サイズを変える
+
+`size`引数に倍率を指定する（`aes`関数の外で）
+
+```{r}
+#| label: size
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), size = 3)
+```
+
+## 点を半透明に
+
+`alpha`（不透明度）
+
+```{r}
+#| label: alpha
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3)
+```
+
+## 配色を変える
+
+`scale_colour_manual`関数で色を直接指定する
+
+```{r}
+#| label: scale_colour_manual
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00"))
+```
+
+## 軸ラベルの設定
+
+`labs`関数
+
+```{r}
+#| label: labs
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
+```
+
+## テーマを変える
+
+`theme_*`関数を加える
+
+```{r}
+#| label: theme
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)") +
+  theme_classic()
+```
+
+## グラフを保存する
+
+`ggsave`関数を使用する
+
+```{r}
+#| label: ggsave
+
+ggsave("plot.png", device = png, width = 12, height = 8, units = "cm")
+```

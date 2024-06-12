@@ -18,27 +18,63 @@ embed-resources: true
 Kanazawa.R にご参加<br /> ありがとうございます。
 :::
 
-## 本日の内容
-
--   Rの紹介
-
--   実演
-
--   まとめ
-
 ## 自己紹介
 
 -   氏名: 伊東宏樹
 
-## そもそも“R”とは
+-   3月まで森林総合研究所勤務
 
+-   4月から個人事業主（[伊東生態統計研究室](https://ito4303.sakura.ne.jp/)）
+
+-   データ解析、執筆・翻訳、研修講師などお引き受けいたします。
+
+-   出版物: 『[BUGSで学ぶ階層モデリング入門](https://www.kyoritsu-pub.co.jp/book/b10003729.html)』『[生態学のための階層モデリング](https://www.kyoritsu-pub.co.jp/book/b10003301.html)』（以上共訳）など
+
+## 本日の内容
+
+-   Rの紹介
+
+-   Rをつかってみる（実演）
+
+-   関連情報
+
+## “R”ってなに
+
+::: {style="margin-top: 2em; font-size: 200%;"}
 統計計算・グラフ作成向けのプログラミング言語&環境
+:::
 
-オープンソース
+## 特長
 
-### なぜ“R”という名前なのか
+-   統計計算に特化した機能
 
-作者のファーストネーム(Robert Gentleman and Ross Ihaka)と、“S”言語から
+    -   パッケージが充実
+
+-   オープンソース
+
+-   無料で使える
+
+-   コミュニティが充実
+
+-   だれでも参加できる
+
+## なぜ“R”という名前なのか
+
+作者のファーストネーム(Robert Gentleman and Ross Ihaka)と、“S”言語から[^1]
+
+[^1]: <https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-is-R-named-R_003f>
+
+## Rで できること
+
+-   統計解析
+
+-   機械学習
+
+-   データの操作・整形
+
+-   データの可視化
+
+-   などなど
 
 ## Rをつかっている人
 
@@ -48,37 +84,48 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 -   業務
 
-    -   マーケティング（広告効果等）
+    -   データ分析一般
+        -   なかでもマーケティング（広告効果等）
     -   データ可視化（グラフ・ダッシュボード等）
     -   電子カルテサポートシステム（開業医）
-
-## Rで できること
-
--   統計解析
-
--   機械学習
-
--   データの整形
-
--   可視化
 
 ## パッケージ
 
 -   機能を拡張する関数やデータなどをまとめたもの
 
--   ユーザーが自分でパッケージを作れる。
+    -   統計解析方法
 
--   CRAN (Comprehensive R Archive Network)
+    -   グラフィック
 
--   審査をとおるとCRANに登録される。
+    -   データの操作・整形
 
--   CRANには20828個のパッケージが登録されている（2024年6月2日現在）。
+    -   YouTubeをみる[^2]
 
-## Rコミュニティ
+    -   などなど
+
+-   ユーザーが自分でパッケージを作れる
+
+[^2]: <https://github.com/kazutan/tubeplayR>
+
+## CRAN (Comprehensive R Archive Network)
+
+-   「しーらん」または「くらん」
+
+-   利用可能なパッケージのハブ
+
+-   審査をとおるとCRANに登録される
+
+-   20828個のパッケージが登録されている（2024年6月2日現在）。
+
+-   世界各地にミラーがある
+
+## Rコミュニティ（日本国内）
 
 -   Tokyo.R, SappoRo.R, fukuoka.R など、各地で勉強会が開催されている。
 
 -   Japan.R
+
+    -   各地のコミュニティがあつまるイベント
 
 ## R vs. Python
 
@@ -88,31 +135,39 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 ### [RとPythonは仲良し](https://github.com/izunyan/practice-py-r/blob/main/pdf/tokyor100_20220723_yawarakakujira_公開版.pdf)
 
--   RStudioではPythonも同時に使える。
+-   RからPythonを使える
 
--   Pythonが得意なところをPythonで処理させたりできる。
+    -   Pythonが得意なところをPythonで処理させたりできる
 
-## インストール
+## Rのインストール
 
 CRANからインストーラーをダウンロード
 
-UNIX系ではソースからコンパイルしてもよい
+![](images/download_and_install.png)
 
 ## RStudio
 
-統合開発環境 (IDE)
+![](images/RStudio.png)
+
+-   R向け（Pythonも）統合開発環境 (IDE)
+
+-   RMarkdownやQuartoといったパブリッシングシステムもサポート
+
+-   ダウンロード <https://posit.co/downloads/>
 
 ## 実演
 
-RStudioに移動します。
+RStudioに移動します
 
-## Rの情報
+## Rの情報源
 
-公式メーリングリスト群 (<https://www.r-project.org/mail.html>)
+公式メーリングリスト群（英語） (<https://www.r-project.org/mail.html>)
 
-Tokyo.RのSlack <https://r-wakalang.slack.com>
+公式Mastodon（英語）<https://fosstodon.org/tags/RStats>
 
-<https://scrapbox.io/mandaRa/>
+Tokyo.RのSlack (r-wakalang) <https://r-wakalang.slack.com>
+
+mandaRa <https://scrapbox.io/mandaRa/>
 
 ## 参考文献
 
