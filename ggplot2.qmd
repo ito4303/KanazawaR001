@@ -7,6 +7,9 @@ lang: ja
 format:
   revealjs:
     theme: [dark, custom.scss]
+    code-copy: true
+    template-partials:
+      - title-slide.html
     fig-width: 5
     fig-height: 3
 execute:
@@ -22,9 +25,27 @@ embed-resources: true
 
 -   ggplot2でグラフを描いてみる
 
+## Rのグラフィック環境
+
+よく使われるのは2つ
+
+-   baseグラフィックス
+
+-   ggplot2
+
+その他、plotlyとかも
+
 ## ggplot2パッケージ
 
+![](images/ggplot2.png)
+
+gg = Grammar of Graphics
+
+統一された文法でグラフを描く
+
 ## インストール
+
+ふつうにインストール
 
 ```{r}
 #| eval: false
@@ -70,7 +91,8 @@ ggplot(data = iris)
 ```{r}
 #| label: mapping
 
-ggplot(data = iris, mapping = aes(x = Sepal.Width, y = Sepal.Length))
+ggplot(data = iris,
+       mapping = aes(x = Sepal.Width, y = Sepal.Length))
 ```
 
 ## geom_pointで散布図グラフ
@@ -82,7 +104,8 @@ geom\_\* = geometric object
 ```{r}
 #| label: geom
 
-ggplot(data = iris, mapping = aes(x = Sepal.Width, y = Sepal.Length)) +
+ggplot(data = iris,
+       mapping = aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point()
 ```
 
@@ -127,7 +150,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 #| label: size
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
-  geom_point(aes(colour = Species, shape = Species), size = 3)
+  geom_point(aes(colour = Species, shape = Species),
+             size = 3)
 ```
 
 ## 点を半透明に
@@ -138,7 +162,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 #| label: alpha
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
-  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3)
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3)
 ```
 
 ## 配色を変える
@@ -149,7 +174,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 #| label: scale_colour_manual
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
-  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
   scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00"))
 ```
 
@@ -161,9 +187,30 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 #| label: labs
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
-  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
   scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
   labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
+```
+
+## グラフをオブジェクトに代入
+
+```{r}
+#| label: substitute
+
+p <- ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
+```
+
+`plot`で表示
+
+```{r}
+#| label: object
+
+plot(p) # print(p)でも可
 ```
 
 ## テーマを変える
@@ -171,13 +218,32 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 `theme_*`関数を加える
 
 ```{r}
-#| label: theme
+#| label: theme_classic
 
-ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
-  geom_point(aes(colour = Species, shape = Species), alpha = 0.7, size = 3) +
-  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
-  labs(x = "Sepal width (mm)", y = "Sepal length (mm)") +
+p +
   theme_classic()
+```
+
+## 別のテーマ
+
+```{r}
+#| label: theme_bw
+
+p +
+  theme_bw()
+```
+
+## さらに別のテーマ
+
+```{r}
+#| label: theme_excel
+#| warning: false
+
+library(ggthemes)
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), size = 3) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)") +
+  scale_color_excel() + theme_excel()
 ```
 
 ## グラフを保存する
@@ -187,5 +253,24 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 ```{r}
 #| label: ggsave
 
-ggsave("plot.png", device = png, width = 12, height = 8, units = "cm")
+ggsave("plot.png", device = png,
+       width = 12, height = 8, units = "cm")
 ```
+
+## 別の種類のグラフ
+
+-   geom_line: 折れ線グラフ
+
+-   geom_boxplot: 箱ヒゲ図
+
+-   geom_histogram: ヒストグラム
+
+-   geom_bar: 棒グラフ
+
+-   などなど
+
+## 参考情報
+
+### [データ分析のためのデータ可視化入門](https://www.kspub.co.jp/book/detail/5164044.html)
+
+### [**ggplot2: Elegant Graphics for Data Analysis (3rd ed)**](https://ggplot2-book.org)

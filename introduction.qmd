@@ -7,7 +7,9 @@ lang: ja
 format:
   revealjs:
     theme: [dark, custom.scss]
-slide-number: true
+    slide-number: true
+    template-partials:
+      - title-slide.html
 editor: visual
 embed-resources: true
 ---
@@ -26,9 +28,9 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 -   4月から個人事業主（[伊東生態統計研究室](https://ito4303.sakura.ne.jp/)）
 
--   データ解析、執筆・翻訳、研修講師などお引き受けいたします。
+-   データ解析、執筆・翻訳、研修講師などお引き受けいたします
 
--   出版物: 『[BUGSで学ぶ階層モデリング入門](https://www.kyoritsu-pub.co.jp/book/b10003729.html)』『[生態学のための階層モデリング](https://www.kyoritsu-pub.co.jp/book/b10003301.html)』（以上共訳）など
+-   出版物: 『[BUGSで学ぶ階層モデリング入門](https://www.kyoritsu-pub.co.jp/book/b10003729.html)』, 『[生態学のための階層モデリング](https://www.kyoritsu-pub.co.jp/book/b10003301.html)』（以上共訳）など
 
 ## 本日の内容
 
@@ -40,7 +42,9 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 ## “R”ってなに
 
-::: {style="margin-top: 2em; font-size: 200%;"}
+![](https://www.r-project.org/logo/Rlogo.png){width="240"}[\[© 2016 The R Foundation, CC-BY-SA 4.0\]]{style="font-size: 50%;"}
+
+::: {style="margin-top: 1em; font-size: 150%;"}
 統計計算・グラフ作成向けのプログラミング言語&環境
 :::
 
