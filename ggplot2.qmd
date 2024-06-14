@@ -248,9 +248,18 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   scale_color_excel() + theme_excel()
 ```
 
+## 回帰直線を加える
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
+  geom_smooth(aes(colour = Species), method = lm)
+```
+
 ## グラフを保存する
 
-`ggsave`関数で直前に表示したグラフをファイルに保存できる
+`ggsave`関数でグラフをファイルに保存できる
 
 ```{r}
 #| label: ggsave
@@ -259,7 +268,20 @@ ggsave("plot.png", device = png,
        width = 12, height = 8, units = "cm")
 ```
 
+デフォルトでは直前に表示したグラフ
+
 ファイル形式はPNGのほか、TIFF, BMP, PDF, SVGなど
+
+------------------------------------------------------------------------
+
+オブジェクトに代入しておいたグラフの保存もできる
+
+```{r}
+#| label: ggsave2
+
+ggsave("plot2.png", plot = p, device = png,
+       width = 12, height = 8, units = "cm")
+```
 
 ## 別の種類のグラフ
 
