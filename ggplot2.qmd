@@ -1,0 +1,308 @@
+---
+title: "ggplot2によるデータ可視化"
+subtitle: "Kanazawa.R #1"
+date: 2024-06-29
+author: "伊東宏樹"
+lang: ja
+format:
+  revealjs:
+    theme: [dark, custom.scss]
+    code-copy: true
+    template-partials:
+      - title-slide.html
+    fig-width: 5
+    fig-height: 3
+execute:
+  echo: true
+slide-number: true
+editor: visual
+embed-resources: true
+---
+
+## 内容
+
+-   ggplot2パッケージの紹介
+
+-   ggplot2でグラフを描く
+
+## Rのグラフィック環境
+
+よく使われるのは2つ
+
+-   baseグラフィックス
+
+-   ggplot2
+
+その他、plotlyとかも
+
+## ggplot2パッケージ
+
+![](images/ggplot2.png)
+
+gg = Grammar of Graphics
+
+統一された文法でグラフを描くことができる
+
+## インストール
+
+ふつうにCRANからインストール（RStudioではTools \> Install Packages... でも）
+
+```{r}
+#| eval: false
+
+install.packages("ggplot2")
+```
+
+## 使い方
+
+ライブラリをよびだし
+
+```{r}
+library(ggplot2)
+```
+
+## データ
+
+3種のアヤメの花の形態データ（萼の長さ・幅、花弁の長さ・幅）
+
+```{r}
+#| label: data
+
+data(iris)
+iris
+```
+
+## ggplot関数
+
+`ggplot`関数だけで、空のグラフを作成
+
+グラフを描きたいデータフレームを`data`引数として与える
+
+```{r}
+#| label: ggplot
+
+ggplot(data = iris)
+```
+
+## データのマッピング
+
+`mapping`引数に`aes`関数を指定して (aes = aesthetic mappings)、どの軸にどの変数を割り当てるかを決める
+
+```{r}
+#| label: mapping
+
+ggplot(data = iris,
+       mapping = aes(x = Sepal.Width, y = Sepal.Length))
+```
+
+## geom_pointで散布図グラフ
+
+"+"演算子で要素を加えていく
+
+geom\_\* = geometric object: データの描画方法を指定するレイヤー
+
+```{r}
+#| label: geom
+
+ggplot(data = iris,
+       mapping = aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point()
+```
+
+## こうしても同じ
+
+`geom_*`関数の方で`mapping`引数を指定することもできる（実は`data`引数も）
+
+```{r}
+#| label: geom2
+
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Sepal.Width, y = Sepal.Length))
+```
+
+## 種ごとに色分け
+
+`aes`関数の`colour`引数(`color`でも可)に`Species`を指定すると、`Species`の種類ごとに点の色が変わる
+
+```{r}
+#| label: colour
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species))
+```
+
+## 形を変える
+
+`shape`引数に`Species`を指定すると、`Species`の種類ごとに点の形が変わる
+
+```{r}
+#| label: shape
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species))
+```
+
+## サイズを変える
+
+`size`引数に倍率を指定（`aes`関数の外で）
+
+```{r}
+#| label: size
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             size = 3)
+```
+
+## 点を半透明に
+
+`alpha`（不透明度）を指定すると、点を半透明にできる
+
+```{r}
+#| label: alpha
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3)
+```
+
+## 配色を変える
+
+`scale_colour_manual`関数で色を直接指定できる
+
+```{r}
+#| label: scale_colour_manual
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00"))
+```
+
+## 軸ラベルの設定
+
+`labs`関数でラベルを指定できる
+
+```{r}
+#| label: labs
+
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
+```
+
+## グラフをオブジェクトに代入
+
+```{r}
+#| label: substitute
+
+p <- ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
+  scale_colour_manual(values = c("#E69F00", "#56B4E9", "#D55E00")) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
+```
+
+------------------------------------------------------------------------
+
+`plot`で表示（`print`でも可）
+
+```{r}
+#| label: object
+
+plot(p)
+```
+
+## テーマを変える
+
+`theme_*`関数でテーマを切り替えられる
+
+```{r}
+#| label: theme_classic
+
+p +
+  theme_classic()
+```
+
+## 別のテーマ
+
+```{r}
+#| label: theme_bw
+
+p +
+  theme_bw()
+```
+
+## さらに別のテーマ
+
+```{r}
+#| label: theme_excel
+#| warning: false
+
+library(ggthemes)
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species), size = 3) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)") +
+  scale_color_excel() + theme_excel()
+```
+
+## 回帰直線を加える
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point(aes(colour = Species, shape = Species),
+             alpha = 0.7, size = 3) +
+  geom_smooth(aes(colour = Species), method = lm)
+```
+
+## グラフを保存する
+
+`ggsave`関数でグラフをファイルに保存できる
+
+```{r}
+#| label: ggsave
+
+ggsave("plot.png", device = png,
+       width = 12, height = 8, units = "cm")
+```
+
+デフォルトでは直前に表示したグラフ
+
+ファイル形式はPNGのほか、TIFF, BMP, PDF, SVGなど
+
+------------------------------------------------------------------------
+
+オブジェクトに代入しておいたグラフの保存もできる
+
+```{r}
+#| label: ggsave2
+
+ggsave("plot2.png", plot = p, device = png,
+       width = 12, height = 8, units = "cm")
+```
+
+## 別の種類のグラフ
+
+-   geom_line: 折れ線グラフ
+
+-   geom_boxplot: 箱ヒゲ図
+
+-   geom_histogram: ヒストグラム
+
+-   geom_bar: 棒グラフ
+
+-   などなど
+
+## さらに知るには
+
+### [データ分析のためのデータ可視化入門](https://www.kspub.co.jp/book/detail/5164044.html)
+
+キーラン・ヒーリー 著　瓜生真也・江口哲史・三村喬生 訳, 講談社
+
+### [**ggplot2: Elegant Graphics for Data Analysis (3rd ed)**](https://ggplot2-book.org)
+
+Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen 著
+
+オンライン版は無料
