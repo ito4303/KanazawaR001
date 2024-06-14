@@ -23,7 +23,7 @@ embed-resources: true
 
 -   ggplot2パッケージの紹介
 
--   ggplot2でグラフを描いてみる
+-   ggplot2でグラフを描く
 
 ## Rのグラフィック環境
 
@@ -41,11 +41,11 @@ embed-resources: true
 
 gg = Grammar of Graphics
 
-統一された文法でグラフを描く
+統一された文法でグラフを描くことができる
 
 ## インストール
 
-ふつうにインストール
+ふつうにCRANからインストール（RStudioではTools \> Install Packages... でも）
 
 ```{r}
 #| eval: false
@@ -55,7 +55,7 @@ install.packages("ggplot2")
 
 ## 使い方
 
-ライブラリよびだし
+ライブラリをよびだし
 
 ```{r}
 library(ggplot2)
@@ -63,7 +63,7 @@ library(ggplot2)
 
 ## データ
 
-アヤメの花のデータ
+3種のアヤメの花の形態データ（萼の長さ・幅、花弁の長さ・幅）
 
 ```{r}
 #| label: data
@@ -74,9 +74,9 @@ iris
 
 ## ggplot関数
 
-`ggplot`関数だけで、空のグラフ
+`ggplot`関数だけで、空のグラフを作成
 
-データフレームを引数として与える
+グラフを描きたいデータフレームを`data`引数として与える
 
 ```{r}
 #| label: ggplot
@@ -86,7 +86,7 @@ ggplot(data = iris)
 
 ## データのマッピング
 
-`mapping`引数に`aes`関数を与える (aes = aesthetic mappings)
+`mapping`引数に`aes`関数を指定して (aes = aesthetic mappings)、どの軸にどの変数を割り当てるかを決める
 
 ```{r}
 #| label: mapping
@@ -99,7 +99,7 @@ ggplot(data = iris,
 
 "+"演算子で要素を加えていく
 
-geom\_\* = geometric object
+geom\_\* = geometric object: データの描画方法を指定するレイヤー
 
 ```{r}
 #| label: geom
@@ -111,7 +111,7 @@ ggplot(data = iris,
 
 ## こうしても同じ
 
-`geom_*`関数の引数でmappingを指定してもよい（実はdataも）
+`geom_*`関数の方で`mapping`引数を指定することもできる（実は`data`引数も）
 
 ```{r}
 #| label: geom2
@@ -122,7 +122,7 @@ ggplot(data = iris) +
 
 ## 種ごとに色分け
 
-`aes`関数の`colour`引数(`color`でも可)に`Species`を指定する
+`aes`関数の`colour`引数(`color`でも可)に`Species`を指定すると、`Species`の種類ごとに点の色が変わる
 
 ```{r}
 #| label: colour
@@ -133,7 +133,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ## 形を変える
 
-`shape`引数に`Species`を指定する
+`shape`引数に`Species`を指定すると、`Species`の種類ごとに点の形が変わる
 
 ```{r}
 #| label: shape
@@ -144,7 +144,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ## サイズを変える
 
-`size`引数に倍率を指定する（`aes`関数の外で）
+`size`引数に倍率を指定（`aes`関数の外で）
 
 ```{r}
 #| label: size
@@ -156,7 +156,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ## 点を半透明に
 
-`alpha`（不透明度）
+`alpha`（不透明度）を指定すると、点を半透明にできる
 
 ```{r}
 #| label: alpha
@@ -168,7 +168,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ## 配色を変える
 
-`scale_colour_manual`関数で色を直接指定する
+`scale_colour_manual`関数で色を直接指定できる
 
 ```{r}
 #| label: scale_colour_manual
@@ -181,7 +181,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ## 軸ラベルの設定
 
-`labs`関数
+`labs`関数でラベルを指定できる
 
 ```{r}
 #| label: labs
@@ -205,17 +205,19 @@ p <- ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
 ```
 
-`plot`で表示
+------------------------------------------------------------------------
+
+`plot`で表示（`print`でも可）
 
 ```{r}
 #| label: object
 
-plot(p) # print(p)でも可
+plot(p)
 ```
 
 ## テーマを変える
 
-`theme_*`関数を加える
+`theme_*`関数でテーマを切り替えられる
 
 ```{r}
 #| label: theme_classic
@@ -248,7 +250,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ## グラフを保存する
 
-`ggsave`関数を使用する
+`ggsave`関数で直前に表示したグラフをファイルに保存できる
 
 ```{r}
 #| label: ggsave
@@ -256,6 +258,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 ggsave("plot.png", device = png,
        width = 12, height = 8, units = "cm")
 ```
+
+ファイル形式はPNGのほか、TIFF, BMP, PDF, SVGなど
 
 ## 別の種類のグラフ
 
@@ -269,8 +273,14 @@ ggsave("plot.png", device = png,
 
 -   などなど
 
-## 参考情報
+## さらに知るには
 
 ### [データ分析のためのデータ可視化入門](https://www.kspub.co.jp/book/detail/5164044.html)
 
+キーラン・ヒーリー 著　瓜生真也・江口哲史・三村喬生 訳, 講談社
+
 ### [**ggplot2: Elegant Graphics for Data Analysis (3rd ed)**](https://ggplot2-book.org)
+
+Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen 著
+
+オンライン版は無料

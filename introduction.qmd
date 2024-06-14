@@ -163,7 +163,9 @@ CRANからインストーラーをダウンロード
 
 RStudioに移動します
 
-## Rの情報源
+## さらに知るには
+
+### ネット上の情報源
 
 公式メーリングリスト群（英語） (<https://www.r-project.org/mail.html>)
 
@@ -173,16 +175,18 @@ Tokyo.RのSlack (r-wakalang) <https://r-wakalang.slack.com>
 
 mandaRa <https://scrapbox.io/mandaRa/>
 
-## 参考文献
+------------------------------------------------------------------------
 
-### [Rで楽しむ統計](https://www.kyoritsu-pub.co.jp/book/b10003780.html)
+### 図書
 
-奥村晴彦著, 共立出版
+Rによる統計解析
 
-### [Rで学ぶ統計的データ解析](https://www.kspub.co.jp/book/detail/5186190.html)
+-   [Rで楽しむ統計](https://www.kyoritsu-pub.co.jp/book/b10003780.html)
+    -   奥村晴彦著, 共立出版
+-   [Rで学ぶ統計的データ解析](https://www.kspub.co.jp/book/detail/5186190.html)
+    -   林賢一・下平英寿著, 講談社
 
-林賢一・下平英寿著, 講談社
+RStudioの使い方など
 
-### [［改訂第2飯］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
-
-松村優哉・湯谷啓明・紀ノ定保礼・前田和寛著, 技術評論社
+-   [［改訂第2飯］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
+    -   松村優哉・湯谷啓明・紀ノ定保礼・前田和寛著, 技術評論社
