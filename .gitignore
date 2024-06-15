@@ -55,4 +55,4 @@ rsconnect/
 introduction.html
 tutorial.html
 ggplot2.html
-plot*.png
+figures/
