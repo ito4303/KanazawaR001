@@ -251,6 +251,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 ## 回帰直線を加える
 
 ```{r}
+#| label: geom_smooth
+
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),
              alpha = 0.7, size = 3) +
@@ -264,8 +266,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 ```{r}
 #| label: ggsave
 
-ggsave("plot.png", device = png,
-       width = 12, height = 8, units = "cm")
+ggsave(filename = file.path("figures", "plot.png"),
+       device = png, width = 12, height = 8, units = "cm")
 ```
 
 デフォルトでは直前に表示したグラフ
@@ -279,8 +281,9 @@ ggsave("plot.png", device = png,
 ```{r}
 #| label: ggsave2
 
-ggsave("plot2.png", plot = p, device = png,
-       width = 12, height = 8, units = "cm")
+ggsave(filename = file.path("figures", "plot2.png"),
+       plot = p,
+       device = png, width = 12, height = 8, units = "cm")
 ```
 
 ## 別の種類のグラフ
