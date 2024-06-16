@@ -55,4 +55,8 @@ rsconnect/
 introduction.html
 tutorial.html
 ggplot2.html
+rgbif.html
 figures/
+
+# other files
+*.zip
