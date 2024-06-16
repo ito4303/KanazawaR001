@@ -41,11 +41,13 @@ embed-resources: true
 
 -   企業活動においても、TNFD（自然関連財務情報開示タスクフォース）[^1]などで生物多様性保全への貢献の報告が求められるように
 
--   「自然共生サイト」[^2]による貢献
+-   「自然共生サイト」[^2]・OECM (Other Effective area-based Conservation Measures)[^3] による貢献
 
 [^1]: <https://tnfd.global/wp-content/uploads/2024/02/自然関連財務情報開示-タスクフォースの提言_2023.pdf>
 
 [^2]: <https://policies.env.go.jp/nature/biodiversity/30by30alliance/kyousei/>
+
+[^3]: <https://www.amita-oshiete.jp/qa/entry/016312.php>
 
 ## 生物多様性情報
 
@@ -260,4 +262,4 @@ leaflet() |>
 
     -   在のみデータ→分布予測
 
-⇒ 自然共生サイト・OECM (Other Effective area-based Conservation Measures) などにむけた活用、などなど
+⇒ 自然共生サイト・OECMなどにむけた活用、などなど
