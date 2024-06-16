@@ -115,6 +115,8 @@ occ_info <- occ_download(pred("taxonKey", taxon_key),  # コウノトリ
 (meta <- occ_download_meta(occ_info))
 ```
 
+`pred` = predicate（述語）
+
 ## 引用情報
 
 GBIFデータの使用にあたっては[DOIの引用](https://docs.ropensci.org/rgbif/articles/gbif_citations.html)が義務となっています。
