@@ -147,6 +147,26 @@ CRANからインストーラーをダウンロード
 
 ![](images/download_and_install.png)
 
+## WebR
+
+Webブラウザで使えるR
+
+Demo: <https://webr.r-wasm.org/latest/>
+
+## Dockerイメージ
+
+-   [**rocker/rstudio**](https://hub.docker.com/r/rocker/rstudio)
+
+    -   RStudio（後述）環境
+
+-   [**rocker/tidyverse**](https://hub.docker.com/r/rocker/tidyverse)
+
+    -   RStudio + tidyverse 環境
+
+-   [**rockerjp/tidyverse**](https://registry.hub.docker.com/r/rockerjp/tidyverse)
+
+    -   RStudio + tidyverse +日本語フォント
+
 ## RStudio
 
 ![](images/RStudio.png)
@@ -184,7 +204,9 @@ Rによる統計解析
 -   [Rで学ぶ統計的データ解析](https://www.kspub.co.jp/book/detail/5186190.html)
     -   林賢一・下平英寿著, 講談社
 
+------------------------------------------------------------------------
+
 RStudioの使い方など
 
--   [［改訂第2飯］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
+-   [［改訂第2版］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
     -   松村優哉・湯谷啓明・紀ノ定保礼・前田和寛著, 技術評論社

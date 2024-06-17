@@ -19,7 +19,9 @@ editor: visual
 embed-resources: true
 ---
 
-## 内容
+## 内容[^1]
+
+[^1]: この発表は、第113回Tokyo.Rでの[発表内容](https://ito4303.github.io/TokyoR113.html)をより詳細にしたものです。
 
 -   生物多様性とは
 
@@ -39,15 +41,15 @@ embed-resources: true
 
 ## 企業活動と生物多様性
 
--   企業活動においても、TNFD（自然関連財務情報開示タスクフォース）[^1]などで生物多様性保全への貢献の報告が求められるように
+-   企業活動においても、TNFD（自然関連財務情報開示タスクフォース）[^2]などで生物多様性保全への貢献の報告が求められるように
 
--   「自然共生サイト」[^2]・OECM (Other Effective area-based Conservation Measures)[^3] による貢献
+-   「自然共生サイト」[^3]・OECM (Other Effective area-based Conservation Measures)[^4] による貢献
 
-[^1]: <https://tnfd.global/wp-content/uploads/2024/02/自然関連財務情報開示-タスクフォースの提言_2023.pdf>
+[^2]: <https://tnfd.global/wp-content/uploads/2024/02/自然関連財務情報開示-タスクフォースの提言_2023.pdf>
 
-[^2]: <https://policies.env.go.jp/nature/biodiversity/30by30alliance/kyousei/>
+[^3]: <https://policies.env.go.jp/nature/biodiversity/30by30alliance/kyousei/>
 
-[^3]: <https://www.amita-oshiete.jp/qa/entry/016312.php>
+[^4]: <https://www.amita-oshiete.jp/qa/entry/016312.php>
 
 ## 生物多様性情報
 
