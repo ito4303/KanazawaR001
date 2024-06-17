@@ -1,0 +1,267 @@
+---
+title: "Rで生物多様性情報を取得する"
+subtitle: "Kanazawa.R #1"
+date: 2024-06-29
+author: "伊東宏樹"
+lang: ja
+format:
+  revealjs:
+    theme: [dark, custom.scss]
+    code-copy: true
+    template-partials:
+      - title-slide.html
+    fig-width: 5
+    fig-height: 3
+execute:
+  echo: true
+slide-number: true
+editor: visual
+embed-resources: true
+---
+
+## 内容
+
+-   生物多様性とは
+
+    -   GBIF ?
+
+-   rgbifパッケージによる生物多様性データの取得
+
+-   実例
+
+## 生物多様性
+
+-   生物環境のゆたかさ・生物のにぎわい
+
+    -   遺伝子・種・生態系の3レベルでの多様性
+
+-   生態系サービス（食料・水供給、気候調整、レクリエーションなどなど）の基盤
+
+## 企業活動と生物多様性
+
+-   企業活動においても、TNFD（自然関連財務情報開示タスクフォース）[^1]などで生物多様性保全への貢献の報告が求められるように
+
+-   「自然共生サイト」[^2]・OECM (Other Effective area-based Conservation Measures)[^3] による貢献
+
+[^1]: <https://tnfd.global/wp-content/uploads/2024/02/自然関連財務情報開示-タスクフォースの提言_2023.pdf>
+
+[^2]: <https://policies.env.go.jp/nature/biodiversity/30by30alliance/kyousei/>
+
+[^3]: <https://www.amita-oshiete.jp/qa/entry/016312.php>
+
+## 生物多様性情報
+
+-   生物種の存在 (出現, occurrence) → 種の多様性の基礎となる情報
+
+    -   地域の生物相
+
+    -   注目する生物の分布
+
+-   公開されている情報を取得する
+
+## GBIF
+
+> GBIF—the Global Biodiversity Information Facility—is an international network and data infrastructure funded by the world's governments and aimed at providing anyone, anywhere, open access to data about all types of life on Earth.
+
+::: {style="text-align: right;"}
+([What is GBIF?](https://www.gbif.org/what-is-gbif))
+:::
+
+-   生物多様性情報の基盤として、生物の記録（標本や観察データなど）の集積と公開
+
+## rgbifパッケージ
+
+-   URL:
+    -   <https://cran.r-project.org/package=rgbif>
+    -   <https://docs.ropensci.org/rgbif/> （ドキュメント）
+-   GBIFとのインターフェイス
+    -   本格的に使うにはGBIFアカウントが必要（rgbifでの設定: [Set Up Your GBIF Username and Password](https://docs.ropensci.org/rgbif/articles/gbif_credentials.html)）
+
+## 例（コウノトリ）
+
+![](images/IMG_6023.jpeg)
+
+2005年に野生復帰、現在も絶滅危惧種
+
+## コウノトリはどこにいた（いる）のか
+
+::: {style="margin-top: 1em;"}
+1.  GBIFから出現（occurrence）データを取得
+
+2.  地図化
+:::
+
+```{r}
+#| label: setup
+#| echo: false
+
+library(rgbif)
+library(leaflet)
+library(htmltools)
+```
+
+## データ取得
+
+```{r}
+#| label: get_data
+#| echo: true
+#| cache: true
+
+species_data <- name_backbone("Ciconia boyciana")  # コウノトリの学名
+taxon_key <- species_data$usageKey
+occ_info <- occ_download(pred("taxonKey", taxon_key),  # コウノトリ
+                         pred("country", "JP"),        # 日本で
+                         pred("hasCoordinate", TRUE))  # 位置情報のあるもの
+(meta <- occ_download_meta(occ_info))
+```
+
+`pred` = predicate（述語）
+
+## 引用情報
+
+GBIFデータの使用にあたっては[DOIの引用](https://docs.ropensci.org/rgbif/articles/gbif_citations.html)が義務となっています。
+
+```{r}
+#| label: doi
+#| echo: true
+
+gbif_citation(meta$key)
+```
+
+## データのダウンロード
+
+```{r}
+#| label: download
+#| echo: true
+#| cache: true
+
+occ_download_wait(occ_info)      # 準備ができるまで待つ
+```
+
+------------------------------------------------------------------------
+
+```{r}
+x <- occ_download_get(occ_info)  # ファイルをダウンロード
+df <- occ_download_import(x)     # ダウンロードしたファイルを読み込む
+```
+
+```{r}
+#| include: false
+#| eval: false
+
+# ダウンロード済みのファイルを読み込む場合
+x <- occ_download_get("0075204-240506114902167")
+df <- occ_download_import(x) 
+```
+
+## 地図表示
+
+コウノトリの記録のある地点を地図で表示する
+
+## leafletパッケージを使用
+
+ウェブ上で拡大縮小・移動のできる地図をつくれる
+
+```{r}
+#| label: leaflet_code
+#| eval: false
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 4)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: leaflet
+#| echo: false
+#| fig-width: 10
+#| fig-height: 7.5
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 4)
+```
+
+## コウノトリの位置情報を追加
+
+```{r}
+#| label: map_code
+#| eval: false
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 5) |>
+  addMarkers(lng = df$decimalLongitude,
+             lat = df$decimalLatitude)
+```
+
+※ 希少種の位置情報にはノイズが加えられている場合がある（保護のため）
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: map
+#| echo: false
+#| fig-width: 10
+#| fig-height: 7.5
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 5) |>
+  addMarkers(lng = df$decimalLongitude,
+             lat = df$decimalLatitude)
+```
+
+## 情報を追加
+
+-   ポップアップに記録者
+
+-   ラベルに観察日
+
+マーカーをまとめる
+
+```{r}
+#| label: map2_code
+#| eval: false
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 5) |>
+  addMarkers(lng = df$decimalLongitude,
+             lat = df$decimalLatitude,
+             popup = htmlEscape(df$recordedBy),
+             label = htmlEscape(df$eventDate),
+             clusterOptions = markerClusterOptions())
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: map2
+#| echo: false
+#| fig-width: 10
+#| fig-height: 7.5
+
+leaflet() |>
+  addTiles() |>
+  setView(lng = 135, lat = 35, zoom = 5) |>
+  addMarkers(lng = df$decimalLongitude,
+             lat = df$decimalLatitude,
+             popup = htmlEscape(df$recordedBy),
+             label = htmlEscape(df$eventDate),
+             clusterOptions = markerClusterOptions())
+```
+
+## データの活用
+
+-   現地調査に向けた予備情報
+
+    -   多様性の評価
+
+-   種分布モデリング
+
+    -   在のみデータ→分布予測
+
+⇒ 自然共生サイト・OECMなどにむけた活用、などなど
