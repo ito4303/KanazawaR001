@@ -1,0 +1,159 @@
+---
+title: "tidyなデータ"
+subtitle: "Kanazawa.R #1"
+date: 2024-06-29
+author: "伊東宏樹"
+lang: ja
+format:
+  revealjs:
+    theme: [dark, custom.scss]
+    code-copy: true
+    template-partials:
+      - title-slide.html
+    fig-width: 5
+    fig-height: 3
+execute:
+  echo: true
+slide-number: true
+editor: visual
+embed-resources: true
+---
+
+## 内容
+
+-   Tidy data（整然データ）
+
+-   tidyverse
+
+    -   tidyr
+
+    -   dplyr
+
+## Tidy data
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+-   Output from executable code
+
+## tidyverse
+
+```{r}
+#| label: tidyverse
+
+library(tidyverse)
+```
+
+## tidyr
+
+-   データの変形
+
+    -   -\> long
+
+    -   -\> wide
+
+## データ
+
+世界銀行による各国の人口データ
+
+```{r}
+#| label: data
+
+data(world_bank_pop)
+head(world_bank_pop)
+```
+
+## こうしたい
+
+::: {style="font-size: 66%;"}
+| country | year | [SP.URB.TOTL]{style="font-size: 80%;"} | [SP.URB.GROW]{style="font-size: 80%;"} | [SP.POP.TOTL]{style="font-size: 80%;"} | [SP.POP.GROW]{style="font-size: 80%;"} |
+|------------|-----------:|-----------:|-----------:|-----------:|-----------:|
+| ABW     | 2000 |                                  41625 |                                   1.66 |                                  89101 |                                   2.54 |
+| ABW     | 2001 |                                  42025 |                                  0.956 |                                  90691 |                                   1.77 |
+|   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
+| ABW     | 2017 |                                  45648 |                                  0.772 |                                 105439 |                                  0.537 |
+| AFE     | 2000 |                              115551653 |                                   3.60 |                              401600588 |                                   2.58 |
+|   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
+| ZWE     | 2017 |                                4755312 |                                   1.86 |                               14751101 |                                   2.04 |
+:::
+
+## pivot_longer
+
+```{r}
+#| label: pivot_longer
+
+pop_long <- world_bank_pop |>
+  pivot_longer(cols = `2000`:`2017`, names_to = "year")
+pop_long
+```
+
+## pivot_wider
+
+```{r}
+#| label: pivot_wider
+
+pop_tidy <- pop_long |>
+  pivot_wider(names_from = indicator)
+pop_tidy
+```
+
+## dplyr
+
+## mutate
+
+```{r}
+#| label: mutate
+
+pop_tidy |>
+  mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
+```
+
+## transmute
+
+```{r}
+#| label: transmute
+
+pop_tidy |>
+  transmute(country, year, pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
+```
+
+## filter
+
+```{r}
+#| label: filter
+
+pop_tidy |>
+  filter(year == 2017, SP.POP.TOTL >= 1e+8)
+```
+
+## select
+
+```{r}
+#| label: select
+
+pop_tidy |>
+  select(country, year, SP.POP.TOTL)
+```
+
+## arrange
+
+```{r}
+#| label: arrange
+
+pop_tidy |>
+  arrange(desc(SP.POP.TOTL))
+```
+
+## summarise
+
+```{r}
+#| label: summarise
+
+pop_tidy |>
+  group_by(country) |>
+  summarise(mean_pop = mean(SP.POP.TOTL))
+```
+
+## \*\_join
+
+## 参考情報
