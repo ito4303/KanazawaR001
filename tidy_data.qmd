@@ -29,14 +29,26 @@ embed-resources: true
 
     -   dplyr
 
-## Tidy data
+## Tidy data（整然データ）
 
-When you click the **Render** button a document will be generated that includes:
+4条件[^1]
 
--   Content authored with markdown
--   Output from executable code
+[^1]: <https://id.fnshr.info/2017/01/09/tidy-data-intro/>
+
+-   個々の変数が1つの列をなす
+-   個々の観測が1つの行をなす
+-   個々の観測の構成単位の類型が1つの表をなす
+-   個々の値が1つのセルをなす
+
+## Tidyでないデータ(messy data; 雑然データ）
+
+![](images/messy_data.png)
+
+[<https://housyasen.env.go.jp/csv/181_AB_01s_2009.csv>]{style="font-size: 60%;"}
 
 ## tidyverse
+
+メタパッケージ
 
 ```{r}
 #| label: tidyverse
@@ -154,6 +166,12 @@ pop_tidy |>
   summarise(mean_pop = mean(SP.POP.TOTL))
 ```
 
-## \*\_join
+## その他、よくつかう関数
+
+-   `bind_rows`
+
+-   `bind_cols`
+
+-   `*_join`
 
 ## 参考情報
