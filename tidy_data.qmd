@@ -1,5 +1,5 @@
 ---
-title: "tidyなデータ"
+title: "tidyverseの<br />データ処理"
 subtitle: "Kanazawa.R #1"
 date: 2024-06-29
 author: "伊東宏樹"
@@ -21,17 +21,19 @@ embed-resources: true
 
 ## 内容
 
--   Tidy data（整然データ）
+-   Tidy data（整然データ）とは
 
--   tidyverse
+-   tidyverseの紹介
 
     -   tidyr
 
     -   dplyr
 
+-   参考情報
+
 ## Tidy data（整然データ）
 
-4条件[^1]
+### Tidy dataの4条件[^1]
 
 [^1]: <https://id.fnshr.info/2017/01/09/tidy-data-intro/>
 
@@ -42,16 +44,53 @@ embed-resources: true
 
 ## Tidyでないデータ(messy data; 雑然データ）
 
+### 例[^2]
+
+[^2]: 引用元 <https://id.fnshr.info/2017/01/09/tidy-data-intro/> 西原史暁, 2017, CC-BY
+
+| 地点 | 6時 | 12時 | 18時 |
+|------|:---:|:----:|:----:|
+| 札幌 |  ☀  |  ☀   |  ☁   |
+| 東京 |  ☁  |  ☂   |  ☂   |
+| 福岡 |  ☂  |  ☀   |  ☀   |
+
+## Tidyなデータ（整然データ）
+
+::: {style="font-size: 90%;"}
+| 地点 | 時刻 | 天気 |
+|------|:----:|:----:|
+| 札幌 | 6時  |  ☀   |
+| 札幌 | 12時 |  ☀   |
+| 札幌 | 18時 |  ☁   |
+| 東京 | 6時  |  ☁   |
+| 東京 | 12時 |  ☂   |
+| 東京 | 18時 |  ☂   |
+| 福岡 | 6時  |  ☂   |
+| 福岡 | 12時 |  ☀   |
+| 福岡 | 18時 |  ☀   |
+:::
+
+## 現実にはtidyでないデータが多い
+
 ![](images/messy_data.png)
 
 [<https://housyasen.env.go.jp/csv/181_AB_01s_2009.csv>]{style="font-size: 60%;"}
 
-## tidyverse
+## データサイエンスのプロセス
 
-メタパッケージ
+![](images/base.png)
+
+::: {style="text-align: right; font-size: 60%;"}
+(Wickham H. et al. (2023) [R for Data Science (2nd ed.)より](https://r4ds.hadley.nz/intro#fig-ds-diagram), CC-BY-NC-ND 3.0)
+:::
+
+## [tidyverse](https://tidyverse.tidyverse.org)
+
+データサイエンスの処理に一貫性をもって使えるパッケージ群、あるいはそのコアとなるパッケージを集めたメタパッケージ
 
 ```{r}
 #| label: tidyverse
+#| message: true
 
 library(tidyverse)
 ```
@@ -60,13 +99,11 @@ library(tidyverse)
 
 -   データの変形
 
-    -   -\> long
+-   tidy化
 
-    -   -\> wide
+## Tidy化の例
 
-## データ
-
-世界銀行による各国の人口データ
+例題データ: 世界銀行による各国の人口データ
 
 ```{r}
 #| label: data
@@ -91,45 +128,51 @@ head(world_bank_pop)
 
 ## pivot_longer
 
+各年のデータを縦に
+
 ```{r}
 #| label: pivot_longer
 
 pop_long <- world_bank_pop |>
   pivot_longer(cols = `2000`:`2017`, names_to = "year")
-pop_long
+head(pop_long)
 ```
 
 ## pivot_wider
+
+データ項目を横に
 
 ```{r}
 #| label: pivot_wider
 
 pop_tidy <- pop_long |>
   pivot_wider(names_from = indicator)
-pop_tidy
+head(pop_tidy)
 ```
 
 ## dplyr
 
+データの集計・抽出・並べ替えなど
+
+::: {style="margin-top: 1em; font-size: 125%;"}
+以下、dplyrパッケージの主要な関数を紹介します
+:::
+
 ## mutate
+
+既存の列から新しい列をつくる
 
 ```{r}
 #| label: mutate
 
 pop_tidy |>
-  mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
-```
-
-## transmute
-
-```{r}
-#| label: transmute
-
-pop_tidy |>
-  transmute(country, year, pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
+  mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL) |>
+  head(6)
 ```
 
 ## filter
+
+条件にあう行を抽出する
 
 ```{r}
 #| label: filter
@@ -140,23 +183,31 @@ pop_tidy |>
 
 ## select
 
+特定の列を抽出する
+
 ```{r}
 #| label: select
 
 pop_tidy |>
-  select(country, year, SP.POP.TOTL)
+  select(country, year, SP.POP.TOTL) |>
+  head(6)
 ```
 
 ## arrange
+
+行を並べ替える
 
 ```{r}
 #| label: arrange
 
 pop_tidy |>
-  arrange(desc(SP.POP.TOTL))
+  arrange(desc(SP.POP.TOTL)) |>
+  head(6)
 ```
 
 ## summarise
+
+集計する
 
 ```{r}
 #| label: summarise
@@ -168,10 +219,26 @@ pop_tidy |>
 
 ## その他、よくつかう関数
 
--   `bind_rows`
+-   `bind_rows`: データセットを縦につなげる
 
--   `bind_cols`
+-   `bind_cols`: データセットを横につなげる
 
--   `*_join`
+-   `*_join`: 2つのデータセットをキー列を参照して結合する
 
-## 参考情報
+    -   `inner_join`, `left_join`, `right_join`, `full_join`, ...
+
+## さらに知るには
+
+-   [R for Data Science, 2nd ed.](https://r4ds.hadley.nz)
+
+    -   Hadley Wickham, Mine Çetinkaya-Rundel, Garrett Grolemund (著)
+    -   オンライン版は無料（英語）
+
+-   Heavy Watal （岩嵜 航さん）
+
+    -   [tidyr — シンプルなデータ変形ツール](https://heavywatal.github.io/rstats/tidyr.html)
+    -   [dplyr — 高速data.frame処理](https://heavywatal.github.io/rstats/dplyr.html)
+
+-   [［改訂第2版］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
+
+    -   松村優哉・湯谷啓明・紀ノ定保礼・前田和寛 (著), 技術評論社
