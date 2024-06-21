@@ -23,11 +23,11 @@ embed-resources: true
 
 -   Tidy data（整然データ）とは
 
--   tidyverseの紹介
+-   tidyverseの紹介（一部）
 
-    -   tidyr
+    -   tidyrパッケージ
 
-    -   dplyr
+    -   dplyrパッケージ
 
 -   参考情報
 
@@ -95,7 +95,7 @@ embed-resources: true
 library(tidyverse)
 ```
 
-## tidyr
+## tidyrパッケージ
 
 -   データの変形
 
@@ -138,6 +138,14 @@ pop_long <- world_bank_pop |>
 head(pop_long)
 ```
 
+## パイプ演算子
+
+‘`|>`’ : 値を次の関数の第1引数として送る
+
+標準のパイプ演算子が導入される前は
+
+‘`%>%`’ : magrittrパッケージのパイプ演算子
+
 ## pivot_wider
 
 データ項目を横に
@@ -150,7 +158,7 @@ pop_tidy <- pop_long |>
 head(pop_tidy)
 ```
 
-## dplyr
+## dplyrパッケージ
 
 データの集計・抽出・並べ替えなど
 
