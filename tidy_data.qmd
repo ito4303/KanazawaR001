@@ -81,7 +81,7 @@ embed-resources: true
 ![](images/base.png)
 
 ::: {style="text-align: right; font-size: 60%;"}
-(Wickham H. et al. (2023) [R for Data Science (2nd ed.)より](https://r4ds.hadley.nz/intro#fig-ds-diagram), CC-BY-NC-ND 3.0)
+(Wickham H. et al. (2023) [R for Data Science (2nd ed.)](https://r4ds.hadley.nz/intro#fig-ds-diagram), CC-BY-NC-ND 3.0)
 :::
 
 ## [tidyverse](https://tidyverse.tidyverse.org)
@@ -103,7 +103,7 @@ library(tidyverse)
 
 ## Tidy化の例
 
-例題データ: 世界銀行による各国の人口データ
+例として「世界銀行による各国の人口データ」を整形する
 
 ```{r}
 #| label: data
@@ -116,7 +116,7 @@ head(world_bank_pop)
 
 ::: {style="font-size: 66%;"}
 | country | year | [SP.URB.TOTL]{style="font-size: 80%;"} | [SP.URB.GROW]{style="font-size: 80%;"} | [SP.POP.TOTL]{style="font-size: 80%;"} | [SP.POP.GROW]{style="font-size: 80%;"} |
-|------------|-----------:|-----------:|-----------:|-----------:|-----------:|
+|---------|-----:|---------------------------------------:|---------------------------------------:|---------------------------------------:|---------------------------------------:|
 | ABW     | 2000 |                                  41625 |                                   1.66 |                                  89101 |                                   2.54 |
 | ABW     | 2001 |                                  42025 |                                  0.956 |                                  90691 |                                   1.77 |
 |   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
@@ -126,9 +126,9 @@ head(world_bank_pop)
 | ZWE     | 2017 |                                4755312 |                                   1.86 |                               14751101 |                                   2.04 |
 :::
 
-## pivot_longer
+## `pivot_longer`
 
-各年のデータを縦に
+`2000`から`2017`までの列を、各年のデータが縦に並ぶように変形する（`year`列に年が入る）
 
 ```{r}
 #| label: pivot_longer
@@ -140,21 +140,21 @@ head(pop_long)
 
 ## パイプ演算子
 
-‘`|>`’ : 値を次の関数の第1引数として送る
+‘`|>`’ : 結果の値を次の関数の第1引数として送る
 
 標準のパイプ演算子が導入される前は
 
 ‘`%>%`’ : magrittrパッケージのパイプ演算子
 
-## pivot_wider
+## `pivot_wider`
 
-データ項目を横に
+`indicator`列の値を変数名に、`value`列を値として列に展開する
 
 ```{r}
 #| label: pivot_wider
 
 pop_tidy <- pop_long |>
-  pivot_wider(names_from = indicator)
+  pivot_wider(names_from = indicator, values_from = value)
 head(pop_tidy)
 ```
 
@@ -166,9 +166,9 @@ head(pop_tidy)
 以下、dplyrパッケージの主要な関数を紹介します
 :::
 
-## mutate
+## `mutate`—既存の列から新しい列をつくる—
 
-既存の列から新しい列をつくる
+`SP.POP.TOTL`と`SP.URB.TOTL`の差を`pop_non_urb`という新しい変数にする
 
 ```{r}
 #| label: mutate
@@ -178,9 +178,9 @@ pop_tidy |>
   head(6)
 ```
 
-## filter
+## `filter`—条件にあう行を抽出する—
 
-条件にあう行を抽出する
+`year`が2017かつ`SP.POP.TOTL`が1億以上の行を抽出する
 
 ```{r}
 #| label: filter
@@ -189,9 +189,9 @@ pop_tidy |>
   filter(year == 2017, SP.POP.TOTL >= 1e+8)
 ```
 
-## select
+## `select`—特定の列を抽出する—
 
-特定の列を抽出する
+`country`, `year`, `SP.POP.TOTL`の3つの列（変数）を残す
 
 ```{r}
 #| label: select
@@ -201,9 +201,9 @@ pop_tidy |>
   head(6)
 ```
 
-## arrange
+## `arrange`—行を並べ替える—
 
-行を並べ替える
+`SP.POP.TOTL`で降順に並べ替える
 
 ```{r}
 #| label: arrange
@@ -213,9 +213,9 @@ pop_tidy |>
   head(6)
 ```
 
-## summarise
+## `summarise`(`summarize`)—集計する—
 
-集計する
+`country`ごとに`SP.POP.TOTL`の平均を求め、`mean_pop`という変数に入れる
 
 ```{r}
 #| label: summarise
