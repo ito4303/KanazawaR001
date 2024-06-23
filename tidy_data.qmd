@@ -1,5 +1,5 @@
 ---
-title: "tidyverseの<br />データ処理"
+title: "tidyverseによる<br />データ処理"
 subtitle: "Kanazawa.R #1"
 date: 2024-06-29
 author: "伊東宏樹"
@@ -33,20 +33,29 @@ embed-resources: true
 
 ## Tidy data（整然データ）
 
-### Tidy dataの4条件[^1]
+::: {style="margin-top: 2em; font-size: 150%;"}
+解析で扱いやすいデータ形式
+:::
 
-[^1]: <https://id.fnshr.info/2017/01/09/tidy-data-intro/>
+## Tidy dataの条件
 
 -   個々の変数が1つの列をなす
+
 -   個々の観測が1つの行をなす
+
 -   個々の観測の構成単位の類型が1つの表をなす
+
 -   個々の値が1つのセルをなす
+
+::: {style="text-align: right;"}
+(西原史暁 [整然データとは何か](https://id.fnshr.info/2017/01/09/tidy-data-intro/))
+:::
 
 ## Tidyでないデータ(messy data; 雑然データ）
 
-### 例[^2]
+### 例[^1]
 
-[^2]: 引用元 <https://id.fnshr.info/2017/01/09/tidy-data-intro/> 西原史暁, 2017, CC-BY
+[^1]: 西原史暁  [整然データとは何か](https://id.fnshr.info/2017/01/09/tidy-data-intro/)
 
 | 地点 | 6時 | 12時 | 18時 |
 |------|:---:|:----:|:----:|
@@ -74,7 +83,7 @@ embed-resources: true
 
 ![](images/messy_data.png)
 
-[<https://housyasen.env.go.jp/csv/181_AB_01s_2009.csv>]{style="font-size: 60%;"}
+[環境省「越前岬測定所の2009年における空間放射線量率測定結果（1時間値）の確定値」<https://housyasen.env.go.jp/csv/181_AB_01s_2009.csv>]{style="font-size: 60%;"}
 
 ## データサイエンスのプロセス
 
@@ -116,7 +125,7 @@ head(world_bank_pop)
 
 ::: {style="font-size: 66%;"}
 | country | year | [SP.URB.TOTL]{style="font-size: 80%;"} | [SP.URB.GROW]{style="font-size: 80%;"} | [SP.POP.TOTL]{style="font-size: 80%;"} | [SP.POP.GROW]{style="font-size: 80%;"} |
-|---------|-----:|---------------------------------------:|---------------------------------------:|---------------------------------------:|---------------------------------------:|
+|------------|-----------:|-----------:|-----------:|-----------:|-----------:|
 | ABW     | 2000 |                                  41625 |                                   1.66 |                                  89101 |                                   2.54 |
 | ABW     | 2001 |                                  42025 |                                  0.956 |                                  90691 |                                   1.77 |
 |   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
@@ -246,6 +255,8 @@ pop_tidy |>
 
     -   [tidyr — シンプルなデータ変形ツール](https://heavywatal.github.io/rstats/tidyr.html)
     -   [dplyr — 高速data.frame処理](https://heavywatal.github.io/rstats/dplyr.html)
+
+------------------------------------------------------------------------
 
 -   [［改訂第2版］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
 
