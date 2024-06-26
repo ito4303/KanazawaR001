@@ -1,5 +1,5 @@
 ---
-title: "tidyverseによる<br />データ処理"
+title: "Tidyなデータ処理"
 subtitle: "Kanazawa.R #1"
 date: 2024-06-29
 author: "伊東宏樹"
@@ -29,7 +29,7 @@ embed-resources: true
 
     -   dplyrパッケージ
 
--   参考情報
+-   さらに知るには（参考情報）
 
 ## Tidy data（整然データ）
 
@@ -39,13 +39,13 @@ embed-resources: true
 
 ## Tidy dataの条件
 
--   個々の変数が1つの列をなす
+1.  個々の変数が1つの列をなす
 
--   個々の観測が1つの行をなす
+2.  個々の観測が1つの行をなす
 
--   個々の観測の構成単位の類型が1つの表をなす
+3.  個々の観測の構成単位の類型が1つの表をなす
 
--   個々の値が1つのセルをなす
+4.  個々の値が1つのセルをなす
 
 ::: {style="text-align: right;"}
 (西原史暁 [整然データとは何か](https://id.fnshr.info/2017/01/09/tidy-data-intro/))
@@ -87,6 +87,10 @@ embed-resources: true
 
 [環境省「越前岬測定所の2009年における空間放射線量率測定結果（1時間値）の確定値」<https://housyasen.env.go.jp/csv/181_AB_01s_2009.csv>]{style="font-size: 60%;"}
 
+::: {style="text-align: right; font-size: 110%;"}
+→ まずはデータの整形 (tidy化)
+:::
+
 ## データサイエンスのプロセス
 
 ![](images/base.png)
@@ -120,14 +124,14 @@ library(tidyverse)
 #| label: data
 
 data(world_bank_pop)
-head(world_bank_pop)
+print(world_bank_pop)
 ```
 
 ## こうしたい
 
 ::: {style="font-size: 66%;"}
 | country | year | [SP.URB.TOTL]{style="font-size: 80%;"} | [SP.URB.GROW]{style="font-size: 80%;"} | [SP.POP.TOTL]{style="font-size: 80%;"} | [SP.POP.GROW]{style="font-size: 80%;"} |
-|---------|-----:|---------------------------------------:|---------------------------------------:|---------------------------------------:|---------------------------------------:|
+|------------|-----------:|-----------:|-----------:|-----------:|-----------:|
 | ABW     | 2000 |                                  41625 |                                   1.66 |                                  89101 |                                   2.54 |
 | ABW     | 2001 |                                  42025 |                                  0.956 |                                  90691 |                                   1.77 |
 |   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
@@ -146,7 +150,7 @@ head(world_bank_pop)
 
 pop_long <- world_bank_pop |>
   pivot_longer(cols = `2000`:`2017`, names_to = "year")
-head(pop_long)
+print(pop_long)
 ```
 
 ## パイプ演算子
@@ -166,7 +170,7 @@ head(pop_long)
 
 pop_tidy <- pop_long |>
   pivot_wider(names_from = indicator, values_from = value)
-head(pop_tidy)
+print(pop_tidy)
 ```
 
 ## dplyrパッケージ
@@ -177,7 +181,7 @@ head(pop_tidy)
 以下、dplyrパッケージの主要な関数を紹介します
 :::
 
-## `mutate`—既存の列から新しい列をつくる—
+## `mutate` —新しい列をつくる—
 
 `SP.POP.TOTL`と`SP.URB.TOTL`の差を`pop_non_urb`という新しい変数にする
 
@@ -185,11 +189,10 @@ head(pop_tidy)
 #| label: mutate
 
 pop_tidy |>
-  mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL) |>
-  head(6)
+  mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
 ```
 
-## `filter`—条件にあう行を抽出する—
+## `filter` —行を抽出する—
 
 `year`が2017かつ`SP.POP.TOTL`が1億以上の行を抽出する
 
@@ -200,7 +203,7 @@ pop_tidy |>
   filter(year == 2017, SP.POP.TOTL >= 1e+8)
 ```
 
-## `select`—特定の列を抽出する—
+## `select` —列を抽出する—
 
 `country`, `year`, `SP.POP.TOTL`の3つの列（変数）を残す
 
@@ -208,11 +211,10 @@ pop_tidy |>
 #| label: select
 
 pop_tidy |>
-  select(country, year, SP.POP.TOTL) |>
-  head(6)
+  select(country, year, SP.POP.TOTL)
 ```
 
-## `arrange`—行を並べ替える—
+## `arrange` —行を並べ替える—
 
 `SP.POP.TOTL`で降順に並べ替える
 
@@ -220,11 +222,10 @@ pop_tidy |>
 #| label: arrange
 
 pop_tidy |>
-  arrange(desc(SP.POP.TOTL)) |>
-  head(6)
+  arrange(desc(SP.POP.TOTL))
 ```
 
-## `summarise`(`summarize`)—集計する—
+## `summarise`(`summarize`) —集計する—
 
 `country`ごとに`SP.POP.TOTL`の平均を求め、`mean_pop`という変数に入れる
 
