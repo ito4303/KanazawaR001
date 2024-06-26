@@ -55,7 +55,7 @@ install.packages("ggplot2")
 
 ## 使い方
 
-ライブラリをよびだし
+まずはライブラリをよびだす
 
 ```{r}
 library(ggplot2)

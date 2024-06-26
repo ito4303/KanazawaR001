@@ -1,5 +1,5 @@
 ---
-title: "Rをつかってみよう（実演）"
+title: "Rをつかってみる（実演）"
 format: html
 editor: visual
 ---
@@ -64,6 +64,16 @@ log(1000, 10)
 log(b = 10, x = 1000)
 ```
 
+デフォルトでは自然対数
+
+```{r}
+log(10)
+```
+
+```{r}
+log(exp(2))
+```
+
 ## 統計関数を使う
 
 ベクトルを変数に代入
@@ -84,7 +94,7 @@ x <- 0:10
 print(x)
 ```
 
-（この場合は）変数名だけでも値が表示される
+変数名だけでも値が表示される
 
 ```{r}
 x
@@ -134,6 +144,8 @@ x[3:5]
 
 ### パッケージのインストール
 
+例としてzipanguパッケージを使ってみる
+
 ```{r}
 #| eval: false
 
@@ -159,7 +171,7 @@ convert_jyear("天保三年")
 ### 住所を区切る
 
 ```{r}
-separate_address("石川県金沢市広岡1丁目1番35号")
+separate_address("石川県野々市市扇が丘7-1")
 ```
 
 政令指定都市の場合
@@ -171,33 +183,45 @@ separate_address("京都府京都市中京区寺町通御池上る上本能寺�
 郡部の場合
 
 ```{r}
-separate_address("北海道虻田郡ニセコ町字富士見55番地")
+separate_address("北海道余市郡余市町黒川町7丁目6")
 ```
 
 ## 
 
-`niseko`に結果を代入
+`addr`に結果を代入
 
 ```{r}
-niseko <- separate_address("北海道虻田郡ニセコ町字富士見55番地")
+addr <- separate_address("北海道余市郡余市町黒川町7丁目6")
+```
+
+代入した結果
+
+```{r}
+addr
 ```
 
 `str`関数でオブジェクトの内容を表示する
 
 ```{r}
-str(niseko)
+str(addr)
 ```
 
 リストの名前を表示する
 
 ```{r}
-names(niseko)
+names(addr)
 ```
 
-`niseko$prefecture` は `niseko[["prefecture"]]` を簡単にした書き方
+リストの要素にアクセスする
 
 ```{r}
-niseko[["prefecture"]]
+addr$prefecture
+```
+
+`addr$prefecture` は `addr[["prefecture"]]` を簡単にした書き方
+
+```{r}
+addr[["prefecture"]]
 ```
 
 ## データフレーム
@@ -215,14 +239,26 @@ data(iris)
 iris
 ```
 
-`Sepal.Length`列を表示
+`Sepal.Length`列を取り出す
 
 ```{r}
 iris$Sepal.Length
 ```
 
-20行目のデータを表示
+20行目を取り出す
 
 ```{r}
 iris[20, ]
+```
+
+Sepal.Length列とSpecies列、31-35行目を取り出す
+
+```{r}
+iris[31:35, c("Sepal.Length", "Species")]
+```
+
+各列（変数）の要約を求める
+
+```{r}
+summary(iris)
 ```
