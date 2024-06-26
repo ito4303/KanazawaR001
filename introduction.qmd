@@ -38,7 +38,7 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 -   Rをつかってみる（実演）
 
--   関連情報
+-   さらに知るには
 
 ## “R”ってなに
 
@@ -64,7 +64,9 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 ## なぜ“R”という名前なのか
 
-作者のファーストネーム(Robert Gentleman and Ross Ihaka)と、“S”言語から[^1]
+::: {style="margin-top: 2em;"}
+最初の作者のファーストネーム (Robert Gentleman and Ross Ihaka) と、“S”言語から[^1]
+:::
 
 [^1]: <https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-is-R-named-R_003f>
 
@@ -95,11 +97,9 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 -   機能を拡張する関数やデータなどをまとめたもの
 
-    -   統計解析方法
+    -   各種の統計解析法
 
-    -   グラフィック
-
-    -   データの操作・整形
+    -   きれいなグラフ作成
 
     -   YouTubeをみる[^2]
 
@@ -115,7 +115,7 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 -   利用可能なパッケージのハブ
 
--   審査をとおるとCRANに登録される
+-   審査をとおるとCRANにパッケージが登録される
 
 -   20828個のパッケージが登録されている（2024年6月2日現在）。
 
@@ -161,7 +161,7 @@ Demo: <https://webr.r-wasm.org/latest/>
 
 -   [**rocker/tidyverse**](https://hub.docker.com/r/rocker/tidyverse)
 
-    -   RStudio + tidyverse 環境
+    -   RStudio + tidyverse （後述）環境
 
 -   [**rockerjp/tidyverse**](https://registry.hub.docker.com/r/rockerjp/tidyverse)
 
