@@ -8,6 +8,7 @@ format:
   revealjs:
     theme: [dark, custom.scss]
     code-copy: true
+    code-fold: false
     template-partials:
       - title-slide.html
     fig-width: 5
@@ -51,7 +52,9 @@ embed-resources: true
 (西原史暁 [整然データとは何か](https://id.fnshr.info/2017/01/09/tidy-data-intro/))
 :::
 
-## Tidyでないデータ（messy data; 雑然データ）の例
+## Tidyでないデータ
+
+### =Messy data（雑然データ）の例
 
 ::: {style="margin-top: 1em; margin-bottom: 1em;"}
 | 地点 | 6時 | 12時 | 18時 |
@@ -101,7 +104,7 @@ embed-resources: true
 
 ## [tidyverse](https://tidyverse.tidyverse.org)
 
-データサイエンスの処理に一貫性をもって使えるパッケージ群、あるいはそのコアとなるパッケージを集めたメタパッケージ
+データ処理に一貫性をもって使えるパッケージ群、あるいはそのコアとなるパッケージを集めたメタパッケージ
 
 ```{r}
 #| label: tidyverse
