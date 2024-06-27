@@ -1,0 +1,269 @@
+---
+title: "Tidyなデータ処理"
+subtitle: "Kanazawa.R #1"
+date: 2024-06-29
+author: "伊東宏樹"
+lang: ja
+format:
+  revealjs:
+    theme: [dark, custom.scss]
+    code-copy: true
+    code-fold: false
+    template-partials:
+      - title-slide.html
+    fig-width: 5
+    fig-height: 3
+execute:
+  echo: true
+slide-number: true
+editor: visual
+embed-resources: true
+---
+
+## 内容
+
+-   Tidy data（整然データ）とは
+
+-   tidyverseの紹介（一部）
+
+    -   tidyrパッケージ
+
+    -   dplyrパッケージ
+
+-   さらに知るには（参考情報）
+
+## Tidy data（整然データ）
+
+::: {style="margin-top: 2em; font-size: 150%;"}
+解析で扱いやすいデータ形式
+:::
+
+## Tidy dataの条件
+
+1.  個々の変数が1つの列をなす
+
+2.  個々の観測が1つの行をなす
+
+3.  個々の観測の構成単位の類型が1つの表をなす
+
+4.  個々の値が1つのセルをなす
+
+::: {style="text-align: right;"}
+(西原史暁 [整然データとは何か](https://id.fnshr.info/2017/01/09/tidy-data-intro/))
+:::
+
+## Tidyでないデータ
+
+### =Messy data（雑然データ）の例
+
+::: {style="margin-top: 1em; margin-bottom: 1em;"}
+| 地点 | 6時 | 12時 | 18時 |
+|------|:---:|:----:|:----:|
+| 札幌 |  ☀  |  ☀   |  ☁   |
+| 東京 |  ☁  |  ☂   |  ☂   |
+| 福岡 |  ☂  |  ☀   |  ☀   |
+:::
+
+::: {style="text-align: right;"}
+(西原史暁 [整然データとは何か](https://id.fnshr.info/2017/01/09/tidy-data-intro/))
+:::
+
+## Tidyなデータ（整然データ）
+
+::: {style="font-size: 90%;"}
+| 地点 | 時刻 | 天気 |
+|------|:----:|:----:|
+| 札幌 | 6時  |  ☀   |
+| 札幌 | 12時 |  ☀   |
+| 札幌 | 18時 |  ☁   |
+| 東京 | 6時  |  ☁   |
+| 東京 | 12時 |  ☂   |
+| 東京 | 18時 |  ☂   |
+| 福岡 | 6時  |  ☂   |
+| 福岡 | 12時 |  ☀   |
+| 福岡 | 18時 |  ☀   |
+:::
+
+## 現実にはtidyでないデータが多い
+
+![](images/messy_data.png)
+
+[環境省「越前岬測定所の2009年における空間放射線量率測定結果（1時間値）の確定値」<https://housyasen.env.go.jp/csv/181_AB_01s_2009.csv>]{style="font-size: 60%;"}
+
+::: {style="text-align: right; font-size: 110%;"}
+→ まずはデータの整形 (tidy化)
+:::
+
+## データサイエンスのプロセス
+
+![](images/base.png)
+
+::: {style="text-align: right; font-size: 60%;"}
+(Wickham H. et al. (2023) [R for Data Science (2nd ed.)](https://r4ds.hadley.nz/intro#fig-ds-diagram), CC-BY-NC-ND 3.0)
+:::
+
+## [tidyverse](https://tidyverse.tidyverse.org)
+
+データ処理に一貫性をもって使えるパッケージ群、あるいはそのコアとなるパッケージを集めたメタパッケージ
+
+```{r}
+#| label: tidyverse
+#| message: true
+
+library(tidyverse)
+```
+
+## tidyrパッケージ
+
+-   データの変形
+
+-   tidy化
+
+## Tidy化の例
+
+例として「世界銀行による各国の人口データ」を整形する
+
+```{r}
+#| label: data
+
+data(world_bank_pop)
+print(world_bank_pop)
+```
+
+## こうしたい
+
+::: {style="font-size: 66%;"}
+| country | year | [SP.URB.TOTL]{style="font-size: 80%;"} | [SP.URB.GROW]{style="font-size: 80%;"} | [SP.POP.TOTL]{style="font-size: 80%;"} | [SP.POP.GROW]{style="font-size: 80%;"} |
+|------------|-----------:|-----------:|-----------:|-----------:|-----------:|
+| ABW     | 2000 |                                  41625 |                                   1.66 |                                  89101 |                                   2.54 |
+| ABW     | 2001 |                                  42025 |                                  0.956 |                                  90691 |                                   1.77 |
+|   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
+| ABW     | 2017 |                                  45648 |                                  0.772 |                                 105439 |                                  0.537 |
+| AFE     | 2000 |                              115551653 |                                   3.60 |                              401600588 |                                   2.58 |
+|   :     |  :   |                                    :   |                                    :   |                                    :   |                                    :   |
+| ZWE     | 2017 |                                4755312 |                                   1.86 |                               14751101 |                                   2.04 |
+:::
+
+## `pivot_longer`
+
+`2000`から`2017`までの列を、各年のデータが縦に並ぶように変形する（`year`列に年が入る）
+
+```{r}
+#| label: pivot_longer
+
+pop_long <- world_bank_pop |>
+  pivot_longer(cols = `2000`:`2017`, names_to = "year")
+print(pop_long)
+```
+
+## パイプ演算子
+
+‘`|>`’ : 結果の値を次の関数の第1引数として送る
+
+標準のパイプ演算子が導入される前は
+
+‘`%>%`’ : magrittrパッケージのパイプ演算子
+
+## `pivot_wider`
+
+`indicator`列の値を変数名に、`value`列を値として列に展開する
+
+```{r}
+#| label: pivot_wider
+
+pop_tidy <- pop_long |>
+  pivot_wider(names_from = indicator, values_from = value)
+print(pop_tidy)
+```
+
+## dplyrパッケージ
+
+データの集計・抽出・並べ替えなど
+
+::: {style="margin-top: 1em; font-size: 125%;"}
+以下、dplyrパッケージの主要な関数を紹介します
+:::
+
+## `mutate` —新しい列をつくる—
+
+`SP.POP.TOTL`と`SP.URB.TOTL`の差を`pop_non_urb`という新しい変数にする
+
+```{r}
+#| label: mutate
+
+pop_tidy |>
+  mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
+```
+
+## `filter` —行を抽出する—
+
+`year`が2017かつ`SP.POP.TOTL`が1億以上の行を抽出する
+
+```{r}
+#| label: filter
+
+pop_tidy |>
+  filter(year == 2017, SP.POP.TOTL >= 1e+8)
+```
+
+## `select` —列を抽出する—
+
+`country`, `year`, `SP.POP.TOTL`の3つの列（変数）を残す
+
+```{r}
+#| label: select
+
+pop_tidy |>
+  select(country, year, SP.POP.TOTL)
+```
+
+## `arrange` —行を並べ替える—
+
+`SP.POP.TOTL`で降順に並べ替える
+
+```{r}
+#| label: arrange
+
+pop_tidy |>
+  arrange(desc(SP.POP.TOTL))
+```
+
+## `summarise`(`summarize`) —集計する—
+
+`country`ごとに`SP.POP.TOTL`の平均を求め、`mean_pop`という変数に入れる
+
+```{r}
+#| label: summarise
+
+pop_tidy |>
+  group_by(country) |>
+  summarise(mean_pop = mean(SP.POP.TOTL))
+```
+
+## その他、よくつかう関数
+
+-   `bind_rows`: データセットを縦につなげる
+
+-   `bind_cols`: データセットを横につなげる
+
+-   `*_join`: 2つのデータセットをキー列を参照して結合する
+
+    -   `inner_join`, `left_join`, `right_join`, `full_join`, ...
+
+## さらに知るには
+
+-   [R for Data Science, 2nd ed.](https://r4ds.hadley.nz)
+
+    -   Hadley Wickham, Mine Çetinkaya-Rundel, Garrett Grolemund (著)
+    -   オンライン版は無料（英語）
+
+-   Heavy Watal （岩嵜 航さん）
+
+    -   [tidyr — シンプルなデータ変形ツール](https://heavywatal.github.io/rstats/tidyr.html)
+    -   [dplyr — 高速data.frame処理](https://heavywatal.github.io/rstats/dplyr.html)
+
+------------------------------------------------------------------------
+
+-   [［改訂第2版］RユーザーのためのRStudio［実践］入門](https://gihyo.jp/book/2021/978-4-297-12170-9)
+
+    -   松村優哉・湯谷啓明・紀ノ定保礼・前田和寛 (著), 技術評論社
