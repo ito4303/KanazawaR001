@@ -1,6 +1,11 @@
 /*-- scss:defaults --*/
 
 // fonts
-$font-family-sans-serif: "BIZ UDPGothic", sans-serif;
-$font-family-monospace: "UDEV Gothic JPDOC", monospace;
+$font-family-sans-serif: "BIZ UDPGothic", 'Noto Sans JP', sans-serif;
+$font-family-monospace: "UDEV Gothic JPDOC", 'Noto Sans Mono', monospace;
 $code-block-font-size: 0.75em;
+
+/*-- scss:rules --*/
+.cell-output, .cell-output-stdout {
+  font-size: 95%;
+}

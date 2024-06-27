@@ -10,8 +10,9 @@ format:
     code-copy: true
     template-partials:
       - title-slide.html
-    fig-width: 5
+    fig-width: 4.5
     fig-height: 3
+    fig-dpi: 200
 execute:
   echo: true
 slide-number: true
@@ -69,7 +70,7 @@ library(ggplot2)
 #| label: data
 
 data(iris)
-iris
+head(iris)
 ```
 
 ## ggplot関数
@@ -80,6 +81,7 @@ iris
 
 ```{r}
 #| label: ggplot
+#| output-location: slide
 
 ggplot(data = iris)
 ```
@@ -90,6 +92,7 @@ ggplot(data = iris)
 
 ```{r}
 #| label: mapping
+#| output-location: slide
 
 ggplot(data = iris,
        mapping = aes(x = Sepal.Width, y = Sepal.Length))
@@ -103,6 +106,7 @@ geom\_\* = geometric object: データの描画方法を指定するレイヤー
 
 ```{r}
 #| label: geom
+#| output-location: slide
 
 ggplot(data = iris,
        mapping = aes(x = Sepal.Width, y = Sepal.Length)) +
@@ -115,6 +119,7 @@ ggplot(data = iris,
 
 ```{r}
 #| label: geom2
+#| output-location: slide
 
 ggplot(data = iris) +
   geom_point(mapping = aes(x = Sepal.Width, y = Sepal.Length))
@@ -126,6 +131,7 @@ ggplot(data = iris) +
 
 ```{r}
 #| label: colour
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species))
@@ -137,6 +143,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ```{r}
 #| label: shape
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species))
@@ -148,6 +155,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ```{r}
 #| label: size
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),
@@ -160,6 +168,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ```{r}
 #| label: alpha
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),
@@ -172,6 +181,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ```{r}
 #| label: scale_colour_manual
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),
@@ -185,6 +195,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ```{r}
 #| label: labs
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),
@@ -205,12 +216,11 @@ p <- ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
 ```
 
-------------------------------------------------------------------------
-
 `plot`で表示（`print`でも可）
 
 ```{r}
 #| label: object
+#| output-location: slide
 
 plot(p)
 ```
@@ -221,6 +231,7 @@ plot(p)
 
 ```{r}
 #| label: theme_classic
+#| output-location: slide
 
 p +
   theme_classic()
@@ -230,6 +241,7 @@ p +
 
 ```{r}
 #| label: theme_bw
+#| output-location: slide
 
 p +
   theme_bw()
@@ -237,9 +249,12 @@ p +
 
 ## さらに別のテーマ
 
+ggthemesパッケージにいろいろなテーマあり
+
 ```{r}
 #| label: theme_excel
 #| warning: false
+#| output-location: slide
 
 library(ggthemes)
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
@@ -252,6 +267,7 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 
 ```{r}
 #| label: geom_smooth
+#| output-location: slide
 
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),

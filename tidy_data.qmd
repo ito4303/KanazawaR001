@@ -7,12 +7,10 @@ lang: ja
 format:
   revealjs:
     theme: [dark, custom.scss]
-    code-copy: true
-    code-fold: false
     template-partials:
       - title-slide.html
-    fig-width: 5
-    fig-height: 3
+    code-line-numbers: true
+    code-copy: true
 execute:
   echo: true
 slide-number: true
@@ -107,6 +105,13 @@ embed-resources: true
 データ処理に一貫性をもって使えるパッケージ群、あるいはそのコアとなるパッケージを集めたメタパッケージ
 
 ```{r}
+#| label: setup
+#| echo: false
+
+options(width = 70)
+```
+
+```{r}
 #| label: tidyverse
 #| message: true
 
@@ -127,7 +132,7 @@ library(tidyverse)
 #| label: data
 
 data(world_bank_pop)
-print(world_bank_pop)
+print(world_bank_pop, width = 66)
 ```
 
 ## こうしたい
@@ -191,8 +196,20 @@ print(pop_tidy)
 ```{r}
 #| label: mutate
 
-pop_tidy |>
+pop_new <- pop_tidy |>
   mutate(pop_non_urb = SP.POP.TOTL - SP.URB.TOTL)
+pop_new
+```
+
+## `select` —列を抽出する—
+
+pop_newから、`country`, `year`, `SP.POP.TOTL`, `SP.URB.TOTL`, `pop_non_urb`の5つの列（変数）を残す
+
+```{r}
+#| label: select
+
+pop_new |>
+  select(country, year, SP.POP.TOTL, SP.URB.TOTL, pop_non_urb)
 ```
 
 ## `filter` —行を抽出する—
@@ -204,17 +221,6 @@ pop_tidy |>
 
 pop_tidy |>
   filter(year == 2017, SP.POP.TOTL >= 1e+8)
-```
-
-## `select` —列を抽出する—
-
-`country`, `year`, `SP.POP.TOTL`の3つの列（変数）を残す
-
-```{r}
-#| label: select
-
-pop_tidy |>
-  select(country, year, SP.POP.TOTL)
 ```
 
 ## `arrange` —行を並べ替える—

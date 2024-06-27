@@ -133,7 +133,7 @@ gbif_citation(meta$key)
 ## データのダウンロード
 
 ```{r}
-#| label: download
+#| label: download_wait
 #| echo: true
 #| cache: true
 
@@ -143,6 +143,9 @@ occ_download_wait(occ_info)      # 準備ができるまで待つ
 ------------------------------------------------------------------------
 
 ```{r}
+#| label: download_get
+#| cache: true
+
 x <- occ_download_get(occ_info)  # ファイルをダウンロード
 df <- occ_download_import(x)     # ダウンロードしたファイルを読み込む
 ```
@@ -166,20 +169,10 @@ df <- occ_download_import(x)
 
 ```{r}
 #| label: leaflet_code
-#| eval: false
-
-leaflet() |>
-  addTiles() |>
-  setView(lng = 135, lat = 35, zoom = 4)
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| label: leaflet
-#| echo: false
+#| echo: true
+#| output-location: slide
 #| fig-width: 10
-#| fig-height: 7.5
+#| fig-height: 6.5
 
 leaflet() |>
   addTiles() |>
@@ -188,26 +181,14 @@ leaflet() |>
 
 ## コウノトリの位置情報を追加
 
-```{r}
-#| label: map_code
-#| eval: false
-
-leaflet() |>
-  addTiles() |>
-  setView(lng = 135, lat = 35, zoom = 5) |>
-  addMarkers(lng = df$decimalLongitude,
-             lat = df$decimalLatitude)
-```
-
 ※ 希少種の位置情報にはノイズが加えられている場合がある（保護のため）
 
-------------------------------------------------------------------------
-
 ```{r}
-#| label: map
-#| echo: false
+#| label: map_code
+#| echo: true
+#| output-location: slide
 #| fig-width: 10
-#| fig-height: 7.5
+#| fig-height: 6.5
 
 leaflet() |>
   addTiles() |>
@@ -222,29 +203,14 @@ leaflet() |>
 
 -   ラベルに観察日
 
-マーカーをまとめる
+-   ついでにマーカーをまとめる
 
 ```{r}
 #| label: map2_code
-#| eval: false
-
-leaflet() |>
-  addTiles() |>
-  setView(lng = 135, lat = 35, zoom = 5) |>
-  addMarkers(lng = df$decimalLongitude,
-             lat = df$decimalLatitude,
-             popup = htmlEscape(df$recordedBy),
-             label = htmlEscape(df$eventDate),
-             clusterOptions = markerClusterOptions())
-```
-
-------------------------------------------------------------------------
-
-```{r}
-#| label: map2
-#| echo: false
+#| echo: true
+#| output-location: slide
 #| fig-width: 10
-#| fig-height: 7.5
+#| fig-height: 6.5
 
 leaflet() |>
   addTiles() |>
