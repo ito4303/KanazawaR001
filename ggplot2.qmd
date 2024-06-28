@@ -272,7 +272,8 @@ ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
 ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_point(aes(colour = Species, shape = Species),
              alpha = 0.7, size = 3) +
-  geom_smooth(aes(colour = Species), method = lm)
+  geom_smooth(formula = y ~ x, aes(colour = Species), method = lm) +
+  labs(x = "Sepal width (mm)", y = "Sepal length (mm)")
 ```
 
 ## グラフを保存する

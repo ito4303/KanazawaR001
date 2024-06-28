@@ -212,31 +212,34 @@ pop_new |>
   select(country, year, SP.POP.TOTL, SP.URB.TOTL, pop_non_urb)
 ```
 
-## `filter` —行を抽出する—
+## `filter` —条件にあう行を抽出する—
 
-`year`が2017かつ`SP.POP.TOTL`が1億以上の行を抽出する
+前の結果から、`year`が2017かつ`SP.POP.TOTL`が1億以上の行を抽出する
 
 ```{r}
 #| label: filter
 
-pop_tidy |>
+pop_new |>
+  select(country, year, SP.POP.TOTL, SP.URB.TOTL, pop_non_urb) |>
   filter(year == 2017, SP.POP.TOTL >= 1e+8)
 ```
 
 ## `arrange` —行を並べ替える—
 
-`SP.POP.TOTL`で降順に並べ替える
+さらに`SP.POP.TOTL`で降順に並べ替える
 
 ```{r}
 #| label: arrange
 
-pop_tidy |>
+pop_new |>
+  select(country, year, SP.POP.TOTL, SP.URB.TOTL, pop_non_urb) |>
+  filter(year == 2017, SP.POP.TOTL >= 1e+8) |>
   arrange(desc(SP.POP.TOTL))
 ```
 
 ## `summarise`(`summarize`) —集計する—
 
-`country`ごとに`SP.POP.TOTL`の平均を求め、`mean_pop`という変数に入れる
+`pop_tidy`について`country`ごとに`SP.POP.TOTL`の平均を求め、`mean_pop`という変数に入れる
 
 ```{r}
 #| label: summarise
@@ -244,6 +247,23 @@ pop_tidy |>
 pop_tidy |>
   group_by(country) |>
   summarise(mean_pop = mean(SP.POP.TOTL))
+```
+
+## グラフ化
+
+さらに上位10地域を棒グラフに
+
+```{r}
+#| label: plot
+#| output-location: slide
+
+pop_tidy |>
+  group_by(country) |>
+  summarise(mean_pop = mean(SP.POP.TOTL)) |>
+  arrange(desc(mean_pop)) |>
+  slice(1:10) |>
+  ggplot(aes(x = country, y = mean_pop)) +
+  geom_bar(stat = "identity")
 ```
 
 ## その他、よくつかう関数
