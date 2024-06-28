@@ -117,13 +117,13 @@ Kanazawa.R にご参加<br /> ありがとうございます。
 
 -   審査をとおるとCRANにパッケージが登録される
 
--   20828個のパッケージが登録されている（2024年6月2日現在）。
+-   21019個のパッケージが登録されている（2024年6月29日現在）
 
 -   世界各地にミラーがある
 
 ## Rコミュニティ（日本国内）
 
--   Tokyo.R, SappoRo.R, fukuoka.R など、各地で勉強会が開催されている。
+-   Tokyo.R, SappoRo.R, fukuoka.R など、各地で勉強会が開催されている
 
 -   Japan.R
 
@@ -166,6 +166,18 @@ Demo: <https://webr.r-wasm.org/latest/>
 -   [**rockerjp/tidyverse**](https://registry.hub.docker.com/r/rockerjp/tidyverse)
 
     -   RStudio + tidyverse +日本語フォント
+
+## R Commander
+
+-   GUI環境
+
+-   `install.packages("Rcmdr")` でインストール
+
+    -   macOSでは[XQuartz](https://www.xquartz.org/) (X11環境) のインストールが必要
+
+-   `library(Rcmdr)` で起動
+
+    -   macOSでは、XQuartzのxtermでRを起動して、そこからR Commanderを起動するのが確実
 
 ## RStudio
 
