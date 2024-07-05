@@ -1,7 +1,9 @@
 ---
 title: "Rをつかってみる（実演）"
-format: html
-embed-resources: true
+format: pdf
+pdf-engine: lualatex
+documentclass: ltjsarticle
+lang: ja
 code-line-numbers: false
 code-copy: true
 editor: visual

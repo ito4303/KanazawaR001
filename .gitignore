@@ -57,6 +57,10 @@ tutorial.html
 ggplot2.html
 rgbif.html
 tidy_data.html
+*.aux
+*.log
+*.tex
+*.pdf
 figures/
 
 # other files
